@@ -6,7 +6,7 @@
             <el-form :inline="true" :model="searchForm">
                 <el-form-item  label="楼盘名">
                     <!-- <el-input size=18 v-model="searchForm.keyword" placeholder=""></el-input> -->
-                    <el-select v-model="searchForm.keyword" placeholder="请选择" >
+                    <el-select v-model="searchForm.keyword" placeholder="请选择" filterable >
                         <el-option
                             v-for="item in housename"
                             :key="item"
@@ -84,8 +84,8 @@
                 houses: [],
                 page: {
                     index: 1,
-                    size: 20,
-                    total: 100
+                    size: 25,
+                    total: 0
                 },
                 searchForm: {},
                 tableLoading: true,
