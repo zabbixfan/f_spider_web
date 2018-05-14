@@ -5,14 +5,25 @@
         <div class="panel-body">
             <el-form :inline="true" :model="searchForm">
                 <el-form-item  label="楼盘名">
-                    <el-input size=18 v-model="searchForm.keyword" placeholder=""></el-input>
+                    <!-- <el-input size=18 v-model="searchForm.keyword" placeholder=""></el-input> -->
+                    <el-select v-model="searchForm.keyword" placeholder="请选择" >
+                        <el-option
+                            v-for="item in housename"
+                            :key="item"
+                            :label="item"
+                            :value="item">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item  label="楼幢号">
+                    <el-input  v-model="searchForm.build_num" placeholder=""></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getHouseInfo">查询</el-button>
                 </el-form-item>
             </el-form>
             <div class="table-container">
-                <el-table :data="houses" stripe>
+                <el-table :data="houses" stripe  v-loading="tableLoading" element-loading-text="数据加载中">
                     <el-table-column label="楼盘名" prop="house_name"></el-table-column>
                     <el-table-column label="楼栋" prop="building_num" sortable></el-table-column>
                     <el-table-column label="房号" prop="room_num" sortable></el-table-column>
@@ -76,7 +87,9 @@
                     size: 20,
                     total: 100
                 },
-                searchForm: {}
+                searchForm: {},
+                tableLoading: true,
+                housename: []
             }
         },
         components: {
@@ -84,13 +97,20 @@
             bottomToolBar
         },
         methods: {
+            getHouseName() {
+                http.fetch(api.housename).then(res => {
+                    this.housename = res.data.data
+                })
+            },
             getHouseInfo() {
                 let skip = (this.page.index - 1) * this.page.size
                 http.fetch(api.houses, {
                     'offset': skip,
                     'limit': this.page.size,
-                    'keyword': this.searchForm.keyword
+                    'keyword': this.searchForm.keyword,
+                    'build_num': this.searchForm.build_num
                 }).then(res => {
+                    this.tableLoading = false
                     this.houses = res.data.data
                     this.page.total = res.data.totalCount
                 })
@@ -106,6 +126,7 @@
         },
         created () {
             this.getHouseInfo()
+            this.getHouseName()
         }
     }
 </script>
