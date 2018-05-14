@@ -2,7 +2,7 @@
   <div id="login-page" @keyup.enter="login">
     <div class="login-form">
       <div class="input-group">
-        <div class="title">连连客服知识库系统</div>
+        <div class="title">古典小说集合</div>
         <el-input
           :autofocus="true"
           placeholder="请输入用户名"

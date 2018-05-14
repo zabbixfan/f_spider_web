@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store'
-import Cookies from 'js-cookie'
+// import store from '../store'
+// import Cookies from 'js-cookie'
 
 Vue.use(VueRouter)
 
@@ -35,103 +35,16 @@ const router = new VueRouter({
             }]
         },
         {
-            path: '/system/',
-            component: load('Index-layout'),
-            navName: '系统管理',
-            navIcon: 'fa-user-circle',
-            hasSub: true,
-            children: [{
-                            path: 'jobs',
-                            navName: '岗位管理',
-                            component: load('system/jobs'),
-                            hasSub: false
-                        },
-                        {
-                            path: 'users',
-                            navName: '用户列表',
-                            component: load('system/users'),
-                            hasSub: false
-                        },
-                        {
-                            path: 'logs',
-                            navName: '日志管理',
-                            component: load('system/logs'),
-                            hasSub: false
-                        }
-                    ],
-            rule: ['superadmin']
-        },
-        {
-            path: '/category/',
-            component: load('Index-layout'),
-            navName: '分类管理',
-            navIcon: 'el-icon-setting',
-            hasSub: false,
-            children: [{
-                path: '',
-                component: load('categories')
-            }],
-            rule: ['superadmin', 'admin']
-        },
-        {
-            path: '/article',
-            component: load('Index-layout'),
-            navName: '知识管理',
-            navIcon: 'fa-book',
-            hasSub: false,
-            children: [
-                {
-                    path: '',
-                    component: load('article/index')
-                },
-                {
-                    path: 'create/',
-                    component: load('article/create')
-                },
-                {
-                    path: 'update/:id',
-                    component: load('article/update')
-                },
-                {
-                    path: ':id',
-                    component: load('article/detail')
-                }
-            ],
-            rule: ['superadmin', 'admin', 'auditor']
-        },
-        {
             path: '/search/',
             component: load('Index-layout'),
-            navName: '知识库查看',
+            navName: '房源库查看',
             navIcon: 'el-icon-search',
             hasSub: false,
             children: [{
                 path: '',
                 component: load('search/index')
-            },
-            {
-                path: ':id',
-                component: load('search/search-detail')
             }]
         },
-        {
-            path: '/test',
-            component: load('test')
-        },
-        // {
-        //     path: '/',
-        //     component: load('Index-layout'),
-        //     children: [
-        //                 {
-        //                     path: 'ticketlist/kibanaaccess/:id',
-        //                     component: load('ticket/apply/kibanaaccess')
-        //                 },
-        //                 {
-        //                     path: 'ticketlist/dcrecord/:id',
-        //                     component: load('ticket/apply/dcrecord')
-        //                 }
-        //             ]
-        // },
         {
             path: '/login',
             component: load('login')
@@ -142,35 +55,36 @@ const router = new VueRouter({
         }
     ]
 })
-const whiteList = ['/login']// no redirect whitelist
+// const whiteList = ['/login']
 
-router.beforeEach((to, from, next) => {
-    if (store.state.account.token) {
-        next()
-    } else {
-        if (to.query.accesstoken) {
-            store.dispatch('setUserToken', {
-                token: to.query.accesstoken,
-                func: next
-            })
-            // store.dispatch('setUserToken', to.query.accesstoken)
-            // next()
-        } else if (Cookies.get('token')) {
-            store.dispatch('setUserToken', {
-                token: Cookies.get('token'),
-                func: next
-            })
+// no redirect whitelist
+// router.beforeEach((to, from, next) => {
+//     if (store.state.account.token) {
+//         next()
+//     } else {
+//         if (to.query.accesstoken) {
+//             store.dispatch('setUserToken', {
+//                 token: to.query.accesstoken,
+//                 func: next
+//             })
+//             // store.dispatch('setUserToken', to.query.accesstoken)
+//             // next()
+//         } else if (Cookies.get('token')) {
+//             store.dispatch('setUserToken', {
+//                 token: Cookies.get('token'),
+//                 func: next
+//             })
 
-            // store.dispatch('setUserToken', Cookies.get('token'))
-            // next()
-        } else {
-            if (whiteList.indexOf(to.path) !== -1) {
-                next()
-            } else {
-                next('/login')
-            }
-        }
-    }
-})
+//             // store.dispatch('setUserToken', Cookies.get('token'))
+//             // next()
+//         } else {
+//             if (whiteList.indexOf(to.path) !== -1) {
+//                 next()
+//             } else {
+//                 next('/login')
+//             }
+//         }
+//     }
+// })
 
 export default router
