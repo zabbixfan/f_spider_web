@@ -9,9 +9,9 @@
                     <el-select v-model="searchForm.keyword" placeholder="请选择" filterable >
                         <el-option
                             v-for="item in housename"
-                            :key="item"
-                            :label="item"
-                            :value="item">
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>

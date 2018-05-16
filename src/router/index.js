@@ -23,26 +23,37 @@ const router = new VueRouter({
      */
 
     routes: [
+        // {
+        //     path: '/',
+        //     component: load('Index-layout'),
+        //     navName: '首页',
+        //     navIcon: 'fa-home',
+        //     hasSub: false,
+        //     children: [{
+        //         path: '',
+        //         component: load('index')
+        //     }]
+        // },
         {
             path: '/',
             component: load('Index-layout'),
-            navName: '首页',
-            navIcon: 'fa-home',
-            hasSub: false,
-            children: [{
-                path: '',
-                component: load('index')
-            }]
-        },
-        {
-            path: '/search/',
-            component: load('Index-layout'),
-            navName: '房源库查看',
+            navName: '一房一价',
             navIcon: 'el-icon-search',
             hasSub: false,
             children: [{
                 path: '',
                 component: load('search/index')
+            }]
+        },
+        {
+            path: '/control/',
+            component: load('Index-layout'),
+            navName: '销控表',
+            navIcon: 'el-icon-search',
+            hasSub: false,
+            children: [{
+                path: '',
+                component: load('search/control')
             }]
         },
         {
