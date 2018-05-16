@@ -17,6 +17,9 @@
                 </el-form-item>
                 <el-form-item  label="楼幢号">
                     <el-input  v-model="searchForm.build_num" placeholder=""></el-input>
+                </el-form-item>                
+                <el-form-item  label="面积大于">
+                    <el-input  v-model="searchForm.area" placeholder=""></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getHouseInfo">查询</el-button>
@@ -108,7 +111,8 @@
                     'offset': skip,
                     'limit': this.page.size,
                     'keyword': this.searchForm.keyword,
-                    'build_num': this.searchForm.build_num
+                    'build_num': this.searchForm.build_num,
+                    'area': this.searchForm.area
                 }).then(res => {
                     this.tableLoading = false
                     this.houses = res.data.data
